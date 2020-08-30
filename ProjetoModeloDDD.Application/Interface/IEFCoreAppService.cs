@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace ProjetoModeloDDD.Domain.Interfaces.Repositories
+namespace ProjetoModeloDDD.Application.Interface
 {
-    public interface IEFCoreRepository<T> where T : class
+    public interface IEFCoreAppService<T> where T : class
     {
         Task<bool> Add(T entity);
         Task<bool> Update(T entity);

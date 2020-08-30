@@ -10,6 +10,8 @@ namespace ProjetoModeloDDD.WebAppMVC.AutoMapper
         {
             CreateMap<Cliente, ClienteViewModel>().ReverseMap();
             CreateMap<Produto, ProdutoViewModel>().ReverseMap();
+            CreateMap<Produto, ProdutoCreateViewModel>().ReverseMap();
+            CreateMap<Produto, ProdutoUpdateViewModel>().ReverseMap();
         }
     }
 }

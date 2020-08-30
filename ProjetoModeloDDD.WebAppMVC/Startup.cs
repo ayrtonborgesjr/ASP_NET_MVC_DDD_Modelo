@@ -16,6 +16,8 @@ using ProjetoModeloDDD.Infrastructure.Data.Repositories;
 using ProjetoModeloDDD.Domain.Interfaces.Repositories;
 using ProjetoModeloDDD.Domain.Services;
 using ProjetoModeloDDD.Domain.Interfaces.Services;
+using ProjetoModeloDDD.Application.Interface;
+using ProjetoModeloDDD.Application;
 
 namespace ProjetoModeloDDD.WebAppMVC
 {
@@ -38,6 +40,8 @@ namespace ProjetoModeloDDD.WebAppMVC
             services.AddScoped<IProdutoRepository, ProdutoRepository>();
             services.AddScoped<IClienteService, ClienteService>();
             services.AddScoped<IProdutoService, ProdutoService>();
+            services.AddScoped<IClienteAppService, ClienteAppService>();
+            services.AddScoped<IProdutoAppService, ProdutoAppService>();
             services.AddScoped(typeof(IEFCoreRepository<>), typeof(EFCoreRepository<>));
             services.AddAutoMapper(typeof(ProjetoModeloDDDMappings));
 

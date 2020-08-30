@@ -13,24 +13,19 @@ namespace ProjetoModeloDDD.Domain.Services
             _repository = repository;
         }
 
-        public void Add(T entity)
+        public async Task<bool> Add(T entity)
         {
-            _repository.Add(entity);
+            return await _repository.Add(entity);
         }
 
-        public void Update(T entity)
+        public async Task<bool> Update(T entity)
         {
-            _repository.Update(entity);
+            return await _repository.Update(entity);
         }
 
-        public void Delete(T entity)
+        public async Task<bool> Delete(T entity)
         {
-            _repository.Delete(entity);
-        }
-
-        public Task<bool> SaveChangeAsync()
-        {
-            return _repository.SaveChangeAsync();
+            return await _repository.Delete(entity);
         }
     }
 }

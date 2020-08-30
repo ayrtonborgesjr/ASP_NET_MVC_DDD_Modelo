@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProjetoModeloDDD.Application.Interface;
 using ProjetoModeloDDD.Domain.Entities;
 using ProjetoModeloDDD.Domain.Interfaces.Repositories;
 using ProjetoModeloDDD.WebAppMVC.ViewModels;
@@ -12,21 +13,31 @@ namespace ProjetoModeloDDD.WebAppMVC.Controllers
 {
     public class ClientesController : Controller
     {
-        private readonly IEFCoreRepository<Cliente> _repo;
-        private readonly IClienteRepository _clienteRepo;
+        private readonly IClienteAppService _clienteAppService;
         private readonly IMapper _mapper;
 
-        public ClientesController(IClienteRepository clienteRepo, IEFCoreRepository<Cliente> repo, IMapper mapper)
+        public ClientesController(IClienteAppService clienteAppService, IEFCoreRepository<Cliente> repo, IMapper mapper)
         {
-            _clienteRepo = clienteRepo;
-            _repo = repo;
+            _clienteAppService = clienteAppService;
             _mapper = mapper;
         }
 
         // GET: ClientesController
         public async Task<IActionResult> Index()
         {
-            var objList = await _clienteRepo.GetAllClientes();
+            var objList = await _clienteAppService.GetAllClientes();
+            var objVM = new List<ClienteViewModel>();
+            foreach (var obj in objList)
+            {
+                objVM.Add(_mapper.Map<ClienteViewModel>(obj));
+            }
+
+            return View(objVM);
+        }
+
+        public async Task<IActionResult> Especiais()
+        {
+            var objList = await _clienteAppService.ObterClientesEspeciais();
             var objVM = new List<ClienteViewModel>();
             foreach (var obj in objList)
             {
@@ -37,19 +48,12 @@ namespace ProjetoModeloDDD.WebAppMVC.Controllers
         }
 
         // GET: ClientesController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var obj = _clienteRepo.GetClienteById(id).Result;
-            if (obj != null)
-            {
-                var objVM = _mapper.Map<ClienteViewModel>(obj);
+            var obj = await _clienteAppService.GetClienteById(id);
+            var objVM = _mapper.Map<ClienteViewModel>(obj);
 
-                return View(objVM);
-            }
-            else
-            {
-                return BadRequest($"Something went wrong when recovering the record");
-            }
+            return View(objVM);
         }
 
         // GET: ClientesController/Create
@@ -61,60 +65,82 @@ namespace ProjetoModeloDDD.WebAppMVC.Controllers
         // POST: ClientesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create([FromBody] ClienteViewModel clienteVM)
+        public async Task<IActionResult> Create(ClienteViewModel clienteVM)
         {
             if (ModelState.IsValid)
             {
                 var clienteObj = _mapper.Map<Cliente>(clienteVM);
-                _repo.Add(clienteObj);
-
-                return RedirectToAction(nameof(Index));
+                if (await _clienteAppService.Add(clienteObj))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError("", $"Something went wrong when saving the record {clienteVM.Nome}");
+                }
             }
 
             return View(clienteVM);
         }
 
-
         // GET: ClientesController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+            var obj = await _clienteAppService.GetClienteById(id);
+            var objVM = _mapper.Map<ClienteViewModel>(obj);
+
+            return View(objVM);
         }
 
         // POST: ClientesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<IActionResult> Edit(ClienteViewModel clienteVM)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var clienteObj = _mapper.Map<Cliente>(clienteVM);
+                if (await _clienteAppService.Update(clienteObj))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError("", $"Something went wrong when updating the record {clienteVM.Nome}");
+                }
             }
-            catch
-            {
-                return View();
-            }
+
+            return View(clienteVM);
         }
 
         // GET: ClientesController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            var obj = await _clienteAppService.GetClienteById(id);
+            var objVM = _mapper.Map<ClienteViewModel>(obj);
+
+            return View(objVM);
         }
 
         // POST: ClientesController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var cliente = await _clienteAppService.GetClienteById(id);
+                if (await _clienteAppService.Delete(cliente))
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ModelState.AddModelError("", $"Something went wrong when deleting the record");
+                }
             }
-            catch
-            {
-                return View();
-            }
+
+            return View();
         }
     }
 }

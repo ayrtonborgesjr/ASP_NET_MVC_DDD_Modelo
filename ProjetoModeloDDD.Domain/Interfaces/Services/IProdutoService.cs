@@ -1,12 +1,13 @@
 ﻿using ProjetoModeloDDD.Domain.Entities;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ProjetoModeloDDD.Domain.Interfaces.Services
 {
     public interface IProdutoService : IEFCoreService<Produto>
     {
-        Task<Produto[]> GetAllProdutos();
+        Task<IEnumerable<Produto>> GetAllProdutos();
         Task<Produto> GetProdutoById(int id);
-        Task<Produto[]> GetProdutosByNome(string nome);
+        Task<IEnumerable<Produto>> GetProdutosByNome(string nome);
     }
 }

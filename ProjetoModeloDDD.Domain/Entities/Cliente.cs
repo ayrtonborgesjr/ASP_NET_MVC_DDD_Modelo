@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ProjetoModeloDDD.Domain.Entities
 {
@@ -18,5 +19,17 @@ namespace ProjetoModeloDDD.Domain.Entities
             return cliente.Ativo && (DateTime.Now.Year - cliente.DataCadastro.Year >= 5);
         }
 
-    }
+        [NotMapped]
+        public string NomeCompleto 
+        { 
+            get 
+            { 
+                return Sobrenome + ", " + Nome; 
+            }
+            set
+            {
+                value = Sobrenome + ", " + Nome;
+            }
+        }
+   }
 }

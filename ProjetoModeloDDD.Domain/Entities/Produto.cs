@@ -1,5 +1,4 @@
-﻿
-namespace ProjetoModeloDDD.Domain.Entities
+﻿namespace ProjetoModeloDDD.Domain.Entities
 {
     public class Produto
     {

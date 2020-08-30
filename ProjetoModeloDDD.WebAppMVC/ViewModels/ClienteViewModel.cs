@@ -29,10 +29,13 @@ namespace ProjetoModeloDDD.WebAppMVC.ViewModels
         public string Email { get; set; }
 
         [ScaffoldColumn(false)]
-        public DateTime DataCadastro { get; set; }  
+        [DisplayName("Data Cadastro")]
+        public DateTime DataCadastro { get; set; }
 
         public bool Ativo { get; set; }
         
         public virtual IEnumerable<ProdutoViewModel> Produtos { get; set; }
+
+        public string NomeCompleto;
     }
 }

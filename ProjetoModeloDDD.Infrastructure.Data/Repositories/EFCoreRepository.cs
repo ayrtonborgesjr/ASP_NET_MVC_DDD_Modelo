@@ -1,4 +1,5 @@
-﻿using ProjetoModeloDDD.Domain.Interfaces.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using ProjetoModeloDDD.Domain.Interfaces.Repositories;
 using ProjetoModeloDDD.Infrastructure.Data.Context;
 using System.Threading.Tasks;
 
@@ -13,24 +14,22 @@ namespace ProjetoModeloDDD.Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public void Add(T entity)
+        public async Task<bool> Add(T entity)
         {
-            _context.Add(entity);
+            _context.Set<T>().Add(entity);
+            return await _context.SaveChangesAsync() >= 0 ? true : false;
         }
 
-        public void Update(T entity)
+        public async Task<bool> Update(T entity)
         {
-            _context.Update(entity);
+            _context.Entry(entity).State = EntityState.Modified;
+            return await _context.SaveChangesAsync() >= 0 ? true : false;
         }
 
-        public void Delete(T entity)
+        public async Task<bool> Delete(T entity)
         {
-            _context.Remove(entity);
-        }
-
-        public async Task<bool> SaveChangeAsync()
-        {
-            return (await _context.SaveChangesAsync()) > 0;
+            _context.Set<T>().Remove(entity);
+            return await _context.SaveChangesAsync() >= 0 ? true : false;
         }
     }
 }

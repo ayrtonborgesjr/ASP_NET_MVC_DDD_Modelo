@@ -1,6 +1,8 @@
 ﻿using ProjetoModeloDDD.Domain.Entities;
 using ProjetoModeloDDD.Domain.Interfaces.Repositories;
 using ProjetoModeloDDD.Domain.Interfaces.Services;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ProjetoModeloDDD.Domain.Services
@@ -14,7 +16,7 @@ namespace ProjetoModeloDDD.Domain.Services
             _clienteRepository = clienteRepository;
         }
 
-        public Task<Cliente[]> GetAllClientes()
+        public Task<IEnumerable<Cliente>> GetAllClientes()
         {
             return _clienteRepository.GetAllClientes();
         }
@@ -24,9 +26,14 @@ namespace ProjetoModeloDDD.Domain.Services
             return _clienteRepository.GetClienteById(id);
         }
 
-        public Task<Cliente[]> GetClientesByNome(string nome)
+        public Task<IEnumerable<Cliente>> GetClientesByNome(string nome)
         {
             return _clienteRepository.GetClientesByNome(nome);
+        }
+
+        public IEnumerable<Cliente> ObterClientesEspeciais(IEnumerable<Cliente> clientes)
+        {
+            return clientes.Where(c => c.ClienteEspecial(c));
         }
     }
 }

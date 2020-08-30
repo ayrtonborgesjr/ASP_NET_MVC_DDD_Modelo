@@ -1,6 +1,7 @@
 ﻿using ProjetoModeloDDD.Domain.Entities; 
 using ProjetoModeloDDD.Domain.Interfaces.Repositories;
 using ProjetoModeloDDD.Domain.Interfaces.Services;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ProjetoModeloDDD.Domain.Services
@@ -14,7 +15,7 @@ namespace ProjetoModeloDDD.Domain.Services
             _produtoRepository = produtoRepository;
         }
 
-        public Task<Produto[]> GetAllProdutos()
+        public Task<IEnumerable<Produto>> GetAllProdutos()
         {
             return _produtoRepository.GetAllProdutos();
         }
@@ -24,7 +25,7 @@ namespace ProjetoModeloDDD.Domain.Services
             return _produtoRepository.GetProdutoById(id);
         }
 
-        public Task<Produto[]> GetProdutosByNome(string nome)
+        public Task<IEnumerable<Produto>> GetProdutosByNome(string nome)
         {
             return _produtoRepository.GetProdutosByNome(nome);
         }

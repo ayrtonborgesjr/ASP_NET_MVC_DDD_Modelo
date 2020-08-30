@@ -4,10 +4,8 @@ namespace ProjetoModeloDDD.Domain.Interfaces.Services
 {
     public interface IEFCoreService<T> where T : class
     {
-        void Add(T entity);
-        void Update(T entity);
-        void Delete(T entity);
-
-        Task<bool> SaveChangeAsync();
+        Task<bool> Add(T entity);
+        Task<bool> Update(T entity);
+        Task<bool> Delete(T entity);
     }
 }

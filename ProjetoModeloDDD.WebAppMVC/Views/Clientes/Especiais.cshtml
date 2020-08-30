@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<ProjetoModeloDDD.WebAppMVC.ViewModels.ClienteViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Especiais";
 }
 
-<h4>Clientes</h4>
+<h1>Especiais</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -12,9 +12,9 @@
 <table class="table">
     <thead>
         <tr>
-            @*<th>
+            <th>
                 @Html.DisplayNameFor(model => model.ClienteId)
-            </th>*@
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Nome)
             </th>
@@ -33,9 +33,9 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            @*<td>
+            <td>
                 @Html.DisplayFor(modelItem => item.ClienteId)
-            </td>*@
+            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Nome)
             </td>
@@ -49,9 +49,9 @@
                 @Html.DisplayFor(modelItem => item.Ativo)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.ClienteId }) |
-                @Html.ActionLink("Details", "Details", new { id=item.ClienteId }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.ClienteId })
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>
         </tr>
 }

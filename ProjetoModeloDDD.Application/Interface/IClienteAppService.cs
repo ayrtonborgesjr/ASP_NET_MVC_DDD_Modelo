@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace ProjetoModeloDDD.Domain.Interfaces.Repositories
+namespace ProjetoModeloDDD.Application.Interface
 {
-    public interface IClienteRepository : IEFCoreRepository<Cliente>
+    public interface IClienteAppService : IEFCoreAppService<Cliente>
     {
         Task<IEnumerable<Cliente>> GetAllClientes();
         Task<Cliente> GetClienteById(int id);
         Task<IEnumerable<Cliente>> GetClientesByNome(string nome);
+        Task<IEnumerable<Cliente>> ObterClientesEspeciais();
     }
 }
