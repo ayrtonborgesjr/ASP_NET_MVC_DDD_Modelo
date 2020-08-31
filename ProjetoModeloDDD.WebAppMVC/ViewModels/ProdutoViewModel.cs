@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ProjetoModeloDDD.Domain.Entities;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace ProjetoModeloDDD.WebAppMVC.ViewModels
@@ -26,7 +27,7 @@ namespace ProjetoModeloDDD.WebAppMVC.ViewModels
         
         [DisplayName("Cliente")]
         public int ClienteId { get; set; }
-        
+
         public virtual ClienteViewModel Cliente { get; set; }
     }
 }

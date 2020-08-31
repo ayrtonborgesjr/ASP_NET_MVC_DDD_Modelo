@@ -1,7 +1,7 @@
-﻿@model ProjetoModeloDDD.WebAppMVC.ViewModels.ProdutoCreateViewModel
+﻿@model ProjetoModeloDDD.WebAppMVC.ViewModels.ProdutoViewModel
 
 @{
-    ViewData["Title"] = "Cadastro";
+    ViewData["Title"] = "Create";
 }
 
 <h4>Cadastrar Produto</h4>
@@ -20,16 +20,16 @@
                 <input asp-for="Valor" class="form-control" />
                 <span asp-validation-for="Valor" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="ClienteId" class="control-label"></label>
-                @Html.DropDownListFor(model => model.ClienteId, ViewBag.ClienteId as SelectList, new { @class = "form-control" })
-                <span asp-validation-for="ClienteId" class="text-danger"></span>
-            </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Disponivel" /> @Html.DisplayNameFor(model => model.Disponivel)
                 </label>
-            </div>            <div class="form-group">
+            </div>
+            <div class="form-group">
+                <label asp-for="ClienteId" class="control-label"></label>
+                <select class="form-control" asp-items="@ViewBag.ClienteId" name="ClienteId"></select>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>

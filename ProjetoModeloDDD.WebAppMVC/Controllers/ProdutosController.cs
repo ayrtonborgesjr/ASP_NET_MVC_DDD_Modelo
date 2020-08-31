@@ -48,7 +48,8 @@ namespace ProjetoModeloDDD.WebAppMVC.Controllers
         // GET: ProdutosController/Create
         public async Task<IActionResult> Create()
         {
-            ViewBag.ClienteId = new SelectList(await _clienteAppService.GetAllClientes(), "ClienteId", "NomeCompleto");
+            IEnumerable<Cliente> clientes = await _clienteAppService.GetAllClientes();
+            ViewBag.ClienteId = new SelectList(clientes, "ClienteId", "NomeCompleto");
 
             return View();
         }
@@ -67,7 +68,9 @@ namespace ProjetoModeloDDD.WebAppMVC.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            ViewBag.ClienteId = new SelectList(await _clienteAppService.GetAllClientes(), "ClienteId", "NomeCompleto", produtoViewModel.ClienteId);
+
+            IEnumerable<Cliente> clientes = await _clienteAppService.GetAllClientes();
+            ViewBag.ClienteId = new SelectList(clientes, "ClienteId", "NomeCompleto", produtoViewModel.ClienteId);
 
             return View(produtoViewModel);
         }
@@ -78,7 +81,8 @@ namespace ProjetoModeloDDD.WebAppMVC.Controllers
             var produtoDomain = await _produtoAppService.GetProdutoById(id);
             var produtoViewModel = _mapper.Map<ProdutoViewModel>(produtoDomain);
 
-            ViewBag.ClienteId = new SelectList(await _clienteAppService.GetAllClientes(), "ClienteId", "NomeCompleto", produtoViewModel.ClienteId);
+            IEnumerable<Cliente> clientes = await _clienteAppService.GetAllClientes();
+            ViewBag.ClienteId = new SelectList(clientes, "ClienteId", "NomeCompleto", produtoViewModel.ClienteId);
 
             return View(produtoViewModel);
         }
@@ -97,7 +101,9 @@ namespace ProjetoModeloDDD.WebAppMVC.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            ViewBag.ClienteId = new SelectList(await _clienteAppService.GetAllClientes(), "ClienteId", "NomeCompleto", produtoViewModel.ClienteId);
+
+            IEnumerable<Cliente> clientes = await _clienteAppService.GetAllClientes();
+            ViewBag.ClienteId = new SelectList(clientes, "ClienteId", "NomeCompleto", produtoViewModel.ClienteId);
 
             return View(produtoViewModel);
         }
